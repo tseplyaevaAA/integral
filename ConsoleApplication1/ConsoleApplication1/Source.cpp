@@ -8,7 +8,15 @@ double func_1(double x){
 	return x;
 }
 
+double gauss(double a, double b){
 
+	if (a > b){ swap(a, b); }
+	double s = (b - a) / 2 * (
+		func_1((a + b) / 2 - (b - a) / (2 * sqrt(3))) +
+		func_1((a + b) / 2 + (b - a) / (2 * sqrt(3)))
+		);
+	return s;
+}
 
 //метод прямоугольников
 double rectangles(float a, float b, int step){
@@ -37,9 +45,14 @@ double I(double a, double b, int n, double y) { return (b - a) / (2 * n)*y; }
 double trapeze(float a, float b, int step) {
 	double sum=0;
 	double g;
-	double dy = (b - a) * 1.0 / step;
+	double dx;
+	if (b >= a){ dx = (b - a) * 1.0 / step; }
+	else{
+		swap(a, b);
+		dx = (b - a) * 1.0 / step;
+	}
 	sum += func_1(a) + func_1(b);
-	for (int i = 1; i<step; i++) { sum += 2 * (func_1(a + dy*i)); }
+	for (int i = 1; i<step; i++) { sum += 2 * (func_1(a + dx*i)); }
 	g = I(a, b, step, sum);
 	
 	return g;
@@ -48,7 +61,12 @@ double trapeze(float a, float b, int step) {
 //метод симпсона 
 double simpson(double a, double b, int step) {
 
-	double h = (b - a)*1.0 / step;
+	double h;
+	if (b >= a){ h = (b - a) * 1.0 / step; }
+	else{
+		swap(a, b);
+		h = (b - a) * 1.0 / step;
+	}
 	double sum = 0;
 
 	double x0 = a;
@@ -74,6 +92,9 @@ int main(){
 
 	//double s2 = simpson(2, 10, 1000);
 	//cout << s2 << endl;
+
+	//double s3 = gauss(2, 10);
+	//cout << s3 << endl;
 
 	_getch();
 	return 0;
