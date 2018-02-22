@@ -82,6 +82,20 @@ double simpson(double a, double b, int step) {
 	return (h / 6)*sum;
 }
 
+double chebishev(double a, double b,int step){
+	if (a>b){
+		swap(a, b);
+	}
+	double s = 0;
+	double h = (b - a) * 1.0 / step;
+
+	for (unsigned i = 0; i < step - 1; i++) {
+		s += func_1(a + h*i);
+	}
+	s = s * (b-a) / step;
+		return s;
+}
+
 int main(){
 
 	//double s = rectangles(2, 10, 1000);
@@ -95,6 +109,9 @@ int main(){
 
 	//double s3 = gauss(2, 10);
 	//cout << s3 << endl;
+
+	//double s4 = chebishev(2, 10, 1000);
+	//cout << s4 << endl;
 
 	_getch();
 	return 0;
